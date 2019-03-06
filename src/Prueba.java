@@ -5,8 +5,11 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 class HiloImpresion implements Runnable{
-	VentanaPrincipal ventana=new VentanaPrincipal();
+	VentanaPrincipal ventana;
 	int contadorSi=1, contadorNo=1;
+	public HiloImpresion(VentanaPrincipal ventana1) {
+		ventana=ventana1;
+	}
 	@Override
 	public void run() {
 		for (int i = 0; i < ventana.resultados.length; i++) {
@@ -22,6 +25,26 @@ class HiloImpresion implements Runnable{
 	}	
 }
 
+class HiloGenerarHistograma implements Runnable{
+
+	VentanaPrincipal ventana;
+	int contadorSi=1, contadorNo=1;
+	public HiloGenerarHistograma(VentanaPrincipal ventana1) {
+		ventana=ventana1;
+	}
+	@Override
+	public void run() {
+		for (int i = 0; i < ventana.resultados.length; i++) {
+			if(ventana.resultados[i].equals("Si")) {
+				contadorSi++;
+			}else {
+				contadorNo++;
+			}
+		}
+		
+	}
+	
+}
 
 
 class VentanaPrincipal extends JFrame{
@@ -99,7 +122,8 @@ public class Prueba {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				Thread hiloImpresion=new Thread(new HiloImpresion());
+				VentanaPrincipal ventana=new VentanaPrincipal();
+				Thread hiloImpresion=new Thread(new HiloImpresion(ventana));
 				hiloImpresion.start();
 
 			}
