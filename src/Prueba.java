@@ -19,14 +19,15 @@ class HiloImpresion implements Runnable{
 			}
 		}
 		
-	}
-	
+	}	
 }
+
+
 
 class VentanaPrincipal extends JFrame{
 	String [] resultados=generarResultados();
 	JTextArea txtAreaSi,txtAreaNo;
-	JProgressBar progressBar;
+	JProgressBar progressBarSi,progressBarNo;
 	public VentanaPrincipal(){
 		getContentPane().setLayout(null);
 		setSize(490, 450);
@@ -54,11 +55,27 @@ class VentanaPrincipal extends JFrame{
 		scroll2.setBounds(250, 50, 200, 200);
 		add(scroll2);
 		
-		progressBar = new JProgressBar(0, 1000);
-		progressBar.setValue(0);
-		progressBar.setStringPainted(true);
-		progressBar.setBounds(300, 100, 100, 40);
-		add(progressBar);
+		JLabel lblResultado=new JLabel("Resultados");
+		lblResultado.setBounds(200, 260, 100, 30);
+		add(lblResultado);
+		
+		JLabel lblRSi=new JLabel("Si");
+		lblRSi.setBounds(20,290,20,30);
+		add(lblRSi);
+		progressBarSi = new JProgressBar(0, 100);
+		progressBarSi.setStringPainted(true);
+		progressBarSi.setBounds(50, 290, 400, 30);
+		//progressBar.setValue(5);
+		add(progressBarSi);
+		
+		JLabel lblRNo=new JLabel("No");
+		lblRNo.setBounds(20,340,20,30);
+		add(lblRNo);
+		progressBarNo = new JProgressBar(0, 100);
+		progressBarNo.setStringPainted(true);
+		progressBarNo.setBounds(50, 340, 400, 30);
+		//progressBar.setValue(5);
+		add(progressBarNo);
 	}
 	
 	public String [] generarResultados() {
