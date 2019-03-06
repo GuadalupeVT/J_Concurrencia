@@ -1,9 +1,28 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
-class VentanaPrincipal extends JFrame {
+class HiloImpresion implements Runnable{
+	VentanaPrincipal ventana=new VentanaPrincipal();
+	@Override
+	public void run() {
+		for (int i = 0; i < ventana.resultados.length; i++) {
+			if(ventana.resultados[i].equals("Si")) {
+				ventana.txtAreaSi.append("Si\n");
+			}else {
+				ventana.txtAreaNo.append("No\n");
+			}
+		}
+		
+	}
+	
+}
+
+class VentanaPrincipal extends JFrame{
+	String [] resultados=generarResultados();
 	JTextArea txtAreaSi,txtAreaNo;
-	JButton btnIniciar;
 	public VentanaPrincipal(){
 		getContentPane().setLayout(null);
 		setSize(490, 450);
@@ -19,15 +38,32 @@ class VentanaPrincipal extends JFrame {
 		lblNo.setBounds(290, 10, 110, 30);
 		add(lblNo);
 		txtAreaSi=new JTextArea();
-		txtAreaSi.setBounds(20, 50, 200, 200);
-		add(txtAreaSi);
+		txtAreaSi.setLineWrap(true);
+		txtAreaSi.setWrapStyleWord(true);
+		 JScrollPane scroll1=new JScrollPane(txtAreaSi);
+		scroll1.setBounds(20, 50, 200, 200);
+		add(scroll1);
 		txtAreaNo=new JTextArea();
-		txtAreaNo.setBounds(250, 50, 200, 200);
-		add(txtAreaNo);
-		btnIniciar=new JButton("Iniciar");
-		btnIniciar.setBounds(160, 280, 130, 30);
-		add(btnIniciar);
+		txtAreaNo.setLineWrap(true);
+		txtAreaNo.setWrapStyleWord(true);
+		JScrollPane scroll2=new JScrollPane(txtAreaNo);
+		scroll2.setBounds(250, 50, 200, 200);
+		add(scroll2);
 	}
+	
+	public String [] generarResultados() {
+		String [] resultados=new String[100];
+		for (int i = 0; i < resultados.length; i++) {
+			if(Math.random()<0.5) {
+				resultados[i]="Si";
+			}else {
+				resultados[i]="No";
+			}
+		}
+		return resultados;
+	}
+
+	
 }
 
 public class Prueba {
@@ -36,7 +72,9 @@ public class Prueba {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new VentanaPrincipal();	
+				Thread hiloImpresion=new Thread(new HiloImpresion());
+				hiloImpresion.start();
+
 			}
 		});
 
