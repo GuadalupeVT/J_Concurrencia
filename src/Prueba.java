@@ -6,13 +6,16 @@ import javax.swing.*;
 
 class HiloImpresion implements Runnable{
 	VentanaPrincipal ventana=new VentanaPrincipal();
+	int contadorSi=1, contadorNo=1;
 	@Override
 	public void run() {
 		for (int i = 0; i < ventana.resultados.length; i++) {
 			if(ventana.resultados[i].equals("Si")) {
-				ventana.txtAreaSi.append("Si\n");
+				ventana.txtAreaSi.append(contadorSi+" - Si\n");
+				contadorSi++;
 			}else {
-				ventana.txtAreaNo.append("No\n");
+				ventana.txtAreaNo.append(contadorNo+" - No\n");
+				contadorNo++;
 			}
 		}
 		
@@ -23,6 +26,7 @@ class HiloImpresion implements Runnable{
 class VentanaPrincipal extends JFrame{
 	String [] resultados=generarResultados();
 	JTextArea txtAreaSi,txtAreaNo;
+	JProgressBar progressBar;
 	public VentanaPrincipal(){
 		getContentPane().setLayout(null);
 		setSize(490, 450);
@@ -49,6 +53,12 @@ class VentanaPrincipal extends JFrame{
 		JScrollPane scroll2=new JScrollPane(txtAreaNo);
 		scroll2.setBounds(250, 50, 200, 200);
 		add(scroll2);
+		
+		progressBar = new JProgressBar(0, 1000);
+		progressBar.setValue(0);
+		progressBar.setStringPainted(true);
+		progressBar.setBounds(300, 100, 100, 40);
+		add(progressBar);
 	}
 	
 	public String [] generarResultados() {
