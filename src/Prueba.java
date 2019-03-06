@@ -21,14 +21,12 @@ class HiloImpresion implements Runnable{
 				contadorNo++;
 			}
 		}
-		
 	}	
 }
 
 class HiloGenerarHistograma implements Runnable{
-
 	VentanaPrincipal ventana;
-	int contadorSi=1, contadorNo=1;
+	int contadorSi=0, contadorNo=0;
 	public HiloGenerarHistograma(VentanaPrincipal ventana1) {
 		ventana=ventana1;
 	}
@@ -41,7 +39,8 @@ class HiloGenerarHistograma implements Runnable{
 				contadorNo++;
 			}
 		}
-		
+		ventana.progressBarSi.setValue(contadorSi);
+		ventana.progressBarNo.setValue(contadorNo);
 	}
 	
 }
@@ -85,24 +84,22 @@ class VentanaPrincipal extends JFrame{
 		JLabel lblRSi=new JLabel("Si");
 		lblRSi.setBounds(20,290,20,30);
 		add(lblRSi);
-		progressBarSi = new JProgressBar(0, 100);
+		progressBarSi = new JProgressBar(0, 10000);
 		progressBarSi.setStringPainted(true);
 		progressBarSi.setBounds(50, 290, 400, 30);
-		//progressBar.setValue(5);
 		add(progressBarSi);
 		
 		JLabel lblRNo=new JLabel("No");
 		lblRNo.setBounds(20,340,20,30);
 		add(lblRNo);
-		progressBarNo = new JProgressBar(0, 100);
+		progressBarNo = new JProgressBar(0, 10000);
 		progressBarNo.setStringPainted(true);
 		progressBarNo.setBounds(50, 340, 400, 30);
-		//progressBar.setValue(5);
 		add(progressBarNo);
 	}
 	
 	public String [] generarResultados() {
-		String [] resultados=new String[100];
+		String [] resultados=new String[10000];
 		for (int i = 0; i < resultados.length; i++) {
 			if(Math.random()<0.5) {
 				resultados[i]="Si";
@@ -124,7 +121,15 @@ public class Prueba {
 			public void run() {
 				VentanaPrincipal ventana=new VentanaPrincipal();
 				Thread hiloImpresion=new Thread(new HiloImpresion(ventana));
+				Thread hiloGenerarHistograma=new Thread(new HiloGenerarHistograma(ventana));
 				hiloImpresion.start();
+				hiloGenerarHistograma.start();
+				try {
+					hiloGenerarHistograma.join();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});
