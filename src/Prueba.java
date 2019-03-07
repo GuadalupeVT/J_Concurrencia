@@ -90,7 +90,7 @@ class VentanaPrincipal extends JFrame{
 		JLabel lblRSi=new JLabel("Si");
 		lblRSi.setBounds(20,290,20,30);
 		add(lblRSi);
-		progressBarSi = new JProgressBar(0, 100);
+		progressBarSi = new JProgressBar(0, 10000000);
 		progressBarSi.setBounds(50, 290, 400, 30);
 		progressBarSi.setStringPainted(true);
 		progressBarSi.setString("Cargando......");
@@ -99,7 +99,7 @@ class VentanaPrincipal extends JFrame{
 		JLabel lblRNo=new JLabel("No");
 		lblRNo.setBounds(20,340,20,30);
 		add(lblRNo);
-		progressBarNo = new JProgressBar(0, 100);
+		progressBarNo = new JProgressBar(0, 10000000);
 		progressBarNo.setBounds(50, 340, 400, 30);
 		progressBarNo.setStringPainted(true);
 		progressBarNo.setString("Cargando......");
@@ -107,8 +107,8 @@ class VentanaPrincipal extends JFrame{
 	}
 	
 	public String [] generarResultados() {
-		String [] resultados=new String[100];
-		String respuestas[]= {"No","Si","No","Si","Si","No"};
+		String [] resultados=new String[10000000];
+		String respuestas[]= {"Si","Si","Si","Si","Si","No","No","No","No","No"};
 		for (int i = 0; i < resultados.length; i++) {
 		resultados[i] = respuestas[new Random().nextInt(respuestas.length)];
 		}
